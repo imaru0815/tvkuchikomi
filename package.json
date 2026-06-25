@@ -1,0 +1,2 @@
+VITE_SUPABASE_URL=ここにSupabaseのProject URL
+VITE_SUPABASE_ANON_KEY=ここにSupabaseのanon public key
