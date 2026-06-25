@@ -6,899 +6,264 @@
   <title>TV口コミログ</title>
   <style>
     :root{
-      --bg:#f4f6fb;
-      --card:#ffffff;
-      --text:#111827;
-      --muted:#6b7280;
-      --line:#e5e7eb;
-      --main:#2563eb;
-      --main2:#1d4ed8;
-      --accent:#f59e0b;
-      --danger:#ef4444;
-      --good:#10b981;
-      --shadow:0 10px 30px rgba(15,23,42,.08);
-      --radius:18px;
+      --bg:#f4f6fb; --card:#fff; --text:#111827; --muted:#6b7280; --line:#e5e7eb;
+      --main:#2563eb; --main2:#1d4ed8; --accent:#f59e0b; --danger:#ef4444; --good:#10b981;
+      --shadow:0 10px 30px rgba(15,23,42,.08); --radius:18px;
     }
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
-    header{
-      position:sticky;
-      top:0;
-      z-index:20;
-      background:rgba(255,255,255,.92);
-      backdrop-filter:blur(14px);
-      border-bottom:1px solid var(--line);
-    }
-    .header-inner{
-      max-width:1100px;
-      margin:0 auto;
-      padding:14px 16px;
-      display:flex;
-      gap:12px;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .logo{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      font-weight:800;
-      font-size:20px;
-    }
-    .logo-icon{
-      width:36px;
-      height:36px;
-      border-radius:12px;
-      display:grid;
-      place-items:center;
-      background:linear-gradient(135deg,#2563eb,#06b6d4);
-      color:white;
-      box-shadow:var(--shadow);
-    }
-    .container{
-      max-width:1100px;
-      margin:0 auto;
-      padding:18px 16px 80px;
-    }
-    .hero{
-      background:linear-gradient(135deg,#1d4ed8,#06b6d4);
-      color:white;
-      border-radius:24px;
-      padding:22px;
-      box-shadow:var(--shadow);
-      margin-bottom:16px;
-    }
-    .hero h1{margin:0 0 8px;font-size:25px}
-    .hero p{margin:0;color:rgba(255,255,255,.88);line-height:1.6}
-    .tabs{
-      display:flex;
-      gap:8px;
-      overflow:auto;
-      padding:4px 0 12px;
-      scrollbar-width:none;
-    }
-    .tabs::-webkit-scrollbar{display:none}
-    .tab{
-      flex:0 0 auto;
-      border:1px solid var(--line);
-      background:white;
-      padding:10px 13px;
-      border-radius:999px;
-      cursor:pointer;
-      font-weight:700;
-      color:#374151;
-    }
-    .tab.active{background:var(--main);border-color:var(--main);color:white}
-    .grid{
-      display:grid;
-      grid-template-columns:1.15fr .85fr;
-      gap:16px;
-      align-items:start;
-    }
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:16px;
-      margin-bottom:16px;
-    }
-    .section-title{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:12px;
-    }
-    .section-title h2{margin:0;font-size:19px}
-    .small{font-size:13px;color:var(--muted)}
-    input,textarea,select,button{
-      width:100%;
-      font:inherit;
-      border-radius:12px;
-      border:1px solid var(--line);
-      padding:12px;
-      background:white;
-    }
-    textarea{min-height:96px;resize:vertical;line-height:1.6}
-    button{
-      cursor:pointer;
-      border:none;
-      background:var(--main);
-      color:white;
-      font-weight:800;
-      transition:.15s;
-    }
-    button:hover{background:var(--main2)}
-    button.secondary{
-      background:#eef2ff;
-      color:#1e40af;
-      border:1px solid #c7d2fe;
-    }
-    button.ghost{
-      background:white;
-      color:#374151;
-      border:1px solid var(--line);
-    }
-    .form-row{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-bottom:10px;
-    }
-    .field{margin-bottom:10px}
-    .field label{
-      display:block;
-      font-size:13px;
-      color:var(--muted);
-      margin:0 0 6px 2px;
-      font-weight:700;
-    }
-    .suggestions{
-      display:none;
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:white;
-      overflow:hidden;
-      margin-top:6px;
-    }
-    .suggestion{
-      padding:11px 12px;
-      border-bottom:1px solid var(--line);
-      cursor:pointer;
-    }
-    .suggestion:last-child{border-bottom:none}
-    .suggestion:hover{background:#f8fafc}
-    .program-list{
-      display:grid;
-      gap:10px;
-    }
-    .program-card{
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:13px;
-      cursor:pointer;
-      background:white;
-    }
-    .program-card:hover{border-color:#93c5fd;background:#f8fbff}
-    .program-head{
-      display:flex;
-      justify-content:space-between;
-      gap:8px;
-      align-items:flex-start;
-    }
-    .program-title{
-      font-weight:900;
-      font-size:16px;
-      line-height:1.35;
-    }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:4px;
-      border-radius:999px;
-      padding:4px 8px;
-      background:#f3f4f6;
-      color:#374151;
-      font-size:12px;
-      font-weight:800;
-      white-space:nowrap;
-    }
-    .badge.blue{background:#dbeafe;color:#1d4ed8}
-    .badge.gold{background:#fef3c7;color:#92400e}
-    .badge.red{background:#fee2e2;color:#b91c1c}
-    .badge.green{background:#d1fae5;color:#047857}
-    .meta{
-      margin-top:6px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.5;
-    }
-    .stats{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
-    .review{
-      border-top:1px solid var(--line);
-      padding:14px 0;
-    }
-    .review:first-child{border-top:none}
-    .review-title{
-      display:flex;
-      gap:8px;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .stars{color:var(--accent);letter-spacing:1px;font-weight:900}
-    .comment{
-      line-height:1.7;
-      white-space:pre-wrap;
-      margin:10px 0;
-    }
-    .comment.spoiler-hidden{
-      filter:blur(5px);
-      user-select:none;
-      cursor:pointer;
-    }
-    .review-actions{
-      display:flex;
-      gap:8px;
-      align-items:center;
-    }
-    .like-btn{
-      width:auto;
-      padding:8px 12px;
-      border-radius:999px;
-      background:#f9fafb;
-      color:#374151;
-      border:1px solid var(--line);
-      font-weight:800;
-    }
-    .like-btn.liked{
-      background:#fee2e2;
-      color:#b91c1c;
-      border-color:#fecaca;
-    }
-    .ranking-item{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      padding:10px 0;
-      border-top:1px solid var(--line);
-    }
-    .ranking-item:first-child{border-top:none}
-    .rank{
-      width:30px;
-      height:30px;
-      border-radius:10px;
-      display:grid;
-      place-items:center;
-      background:#eef2ff;
-      color:#1e40af;
-      font-weight:900;
-      flex:0 0 auto;
-    }
-    .empty{
-      text-align:center;
-      color:var(--muted);
-      padding:24px 10px;
-      line-height:1.7;
-    }
-    .selected-box{
-      display:none;
-      background:#eff6ff;
-      border:1px solid #bfdbfe;
-      color:#1e3a8a;
-      border-radius:14px;
-      padding:10px 12px;
-      margin-bottom:10px;
-      font-weight:800;
-    }
-    .bottom-nav{
-      display:none;
-      position:fixed;
-      left:0;
-      right:0;
-      bottom:0;
-      z-index:30;
-      background:white;
-      border-top:1px solid var(--line);
-      padding:7px 8px calc(7px + env(safe-area-inset-bottom));
-      grid-template-columns:repeat(4,1fr);
-      gap:6px;
-    }
-    .bottom-nav button{
-      padding:8px 4px;
-      font-size:12px;
-      border-radius:12px;
-      background:white;
-      color:#374151;
-      border:1px solid transparent;
-    }
-    .bottom-nav button.active{
-      background:#eff6ff;
-      border-color:#bfdbfe;
-      color:#1d4ed8;
-    }
-    .admin{
-      border:1px dashed #cbd5e1;
-      background:#f8fafc;
-    }
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+    header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+    .header-inner{max-width:1100px;margin:0 auto;padding:14px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .logo{display:flex;gap:10px;align-items:center;font-weight:900;font-size:20px}
+    .logo-icon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#06b6d4);color:white;box-shadow:var(--shadow)}
+    .container{max-width:1100px;margin:0 auto;padding:18px 16px 90px}
+    .hero{background:linear-gradient(135deg,#1d4ed8,#06b6d4);color:white;border-radius:24px;padding:22px;box-shadow:var(--shadow);margin-bottom:16px}
+    .hero h1{margin:0 0 8px;font-size:25px}.hero p{margin:0;color:rgba(255,255,255,.88);line-height:1.6}
+    .tabs,.subtabs{display:flex;gap:8px;overflow:auto;padding:4px 0 12px;scrollbar-width:none}.tabs::-webkit-scrollbar,.subtabs::-webkit-scrollbar{display:none}
+    .tab,.subtab{flex:0 0 auto;border:1px solid var(--line);background:white;padding:10px 13px;border-radius:999px;cursor:pointer;font-weight:800;color:#374151}
+    .tab.active,.subtab.active{background:var(--main);border-color:var(--main);color:white}
+    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:start}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-bottom:16px}
+    .section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.section-title h2{margin:0;font-size:19px}
+    .small{font-size:13px;color:var(--muted)} input,textarea,select,button{width:100%;font:inherit;border-radius:12px;border:1px solid var(--line);padding:12px;background:white}
+    textarea{min-height:96px;resize:vertical;line-height:1.6}button{cursor:pointer;border:none;background:var(--main);color:white;font-weight:800;transition:.15s}button:hover{background:var(--main2)}
+    button.ghost{background:white;color:#374151;border:1px solid var(--line)} button.secondary{background:#eef2ff;color:#1e40af;border:1px solid #c7d2fe}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}.field{margin-bottom:10px}.field label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px 2px;font-weight:800}
+    .suggestions{display:none;border:1px solid var(--line);border-radius:14px;background:white;overflow:hidden;margin-top:6px}.suggestion{padding:11px 12px;border-bottom:1px solid var(--line);cursor:pointer}.suggestion:hover{background:#f8fafc}
+    .program-list{display:grid;gap:10px}.program-card{border:1px solid var(--line);border-radius:16px;padding:13px;cursor:pointer;background:white}.program-card:hover{border-color:#93c5fd;background:#f8fbff}
+    .program-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.program-title{font-weight:900;font-size:16px;line-height:1.35}
+    .badge{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:4px 8px;background:#f3f4f6;color:#374151;font-size:12px;font-weight:800;white-space:nowrap}
+    .badge.blue{background:#dbeafe;color:#1d4ed8}.badge.gold{background:#fef3c7;color:#92400e}.badge.red{background:#fee2e2;color:#b91c1c}.badge.green{background:#d1fae5;color:#047857}
+    .meta{margin-top:6px;color:var(--muted);font-size:13px;line-height:1.5}.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .review{border-top:1px solid var(--line);padding:14px 0}.review:first-child{border-top:none}.review-title{display:flex;gap:8px;align-items:center;justify-content:space-between}
+    .stars{color:var(--accent);letter-spacing:1px;font-weight:900}.comment{line-height:1.7;white-space:pre-wrap;margin:10px 0}.comment.spoiler-hidden{filter:blur(5px);user-select:none;cursor:pointer}
+    .review-actions{display:flex;gap:8px;align-items:center}.like-btn{width:auto;padding:8px 12px;border-radius:999px;background:#f9fafb;color:#374151;border:1px solid var(--line);font-weight:800}.like-btn.liked{background:#fee2e2;color:#b91c1c;border-color:#fecaca}
+    .ranking-item{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}.ranking-item:first-child{border-top:none}.rank{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:#eef2ff;color:#1e40af;font-weight:900;flex:0 0 auto}
+    .empty{text-align:center;color:var(--muted);padding:24px 10px;line-height:1.7}.selected-box{display:none;background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;border-radius:14px;padding:10px 12px;margin-bottom:10px;font-weight:800}
+    .date-head{font-weight:900;margin:14px 0 8px;color:#111827}.bottom-nav{display:none;position:fixed;left:0;right:0;bottom:0;z-index:30;background:white;border-top:1px solid var(--line);padding:7px 8px calc(7px + env(safe-area-inset-bottom));grid-template-columns:repeat(4,1fr);gap:6px}
+    .bottom-nav button{padding:8px 4px;font-size:12px;border-radius:12px;background:white;color:#374151;border:1px solid transparent}.bottom-nav button.active{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
     .hidden{display:none!important}
-    @media(max-width:820px){
-      .grid{grid-template-columns:1fr}
-      .hero h1{font-size:22px}
-      .form-row{grid-template-columns:1fr}
-      .bottom-nav{display:grid}
-      .container{padding-bottom:96px}
-      .header-inner{padding:12px 14px}
-      .logo{font-size:18px}
-    }
+    @media(max-width:820px){.grid{grid-template-columns:1fr}.hero h1{font-size:22px}.form-row{grid-template-columns:1fr}.bottom-nav{display:grid}.container{padding-bottom:96px}.header-inner{padding:12px 14px}.logo{font-size:18px}}
   </style>
 </head>
 <body>
-  <header>
-    <div class="header-inner">
-      <div class="logo"><div class="logo-icon">📺</div><span>TV口コミログ</span></div>
-      <button class="ghost" style="width:auto;padding:9px 12px" onclick="resetDemo()">初期化</button>
-    </div>
-  </header>
+<header>
+  <div class="header-inner">
+    <div class="logo"><div class="logo-icon">📺</div><span>TV口コミログ</span></div>
+    <button class="ghost" style="width:auto;padding:9px 12px" onclick="resetDemo()">初期化</button>
+  </div>
+</header>
 
-  <main class="container">
-    <section class="hero">
-      <h1>今夜の神回を、放送回ごとに残す。</h1>
-      <p>番組名は候補から選択。表記ゆれを防ぎ、番組・放送回ごとに平均評価、口コミ、いいね、ランキングを集計します。</p>
-    </section>
+<main class="container">
+  <section class="hero">
+    <h1>前後1週間の全国ネット番組から口コミ。</h1>
+    <p>番組名は候補から選択。表記ゆれを防ぎ、放送回ごとに平均評価・口コミ・いいね・ランキングを集計します。</p>
+  </section>
 
-    <nav class="tabs">
-      <button class="tab active" data-view="home" onclick="switchView('home')">今日の番組</button>
-      <button class="tab" data-view="post" onclick="switchView('post')">口コミを書く</button>
-      <button class="tab" data-view="reviews" onclick="switchView('reviews')">最新口コミ</button>
-      <button class="tab" data-view="ranking" onclick="switchView('ranking')">ランキング</button>
-      <button class="tab" data-view="admin" onclick="switchView('admin')">番組マスター</button>
-    </nav>
-
-    <div id="view-home" class="view">
-      <div class="grid">
-        <section class="card">
-          <div class="section-title">
-            <h2>今日・最近の放送回</h2>
-            <span class="small">番組を選んで口コミへ</span>
-          </div>
-          <div id="todayPrograms" class="program-list"></div>
-        </section>
-        <aside>
-          <section class="card">
-            <div class="section-title"><h2>今夜の神回ランキング</h2></div>
-            <div id="tonightRanking"></div>
-          </section>
-          <section class="card">
-            <div class="section-title"><h2>放送局別ランキング</h2></div>
-            <div id="stationRanking"></div>
-          </section>
-        </aside>
-      </div>
-    </div>
-
-    <div id="view-post" class="view hidden">
-      <div class="grid">
-        <section class="card">
-          <div class="section-title">
-            <h2>口コミを書く</h2>
-            <span class="small">番組ID・放送回IDで保存</span>
-          </div>
-
-          <div id="selectedBox" class="selected-box"></div>
-
-          <div class="field">
-            <label>番組を検索して選択</label>
-            <input id="programSearch" placeholder="例：水曜日、報道、M-1、情熱大陸" autocomplete="off" oninput="showSuggestions()" />
-            <div id="suggestions" class="suggestions"></div>
-          </div>
-
-          <div class="form-row">
-            <div class="field">
-              <label>放送回</label>
-              <select id="episodeSelect" onchange="selectEpisodeFromDropdown()"></select>
-            </div>
-            <div class="field">
-              <label>評価</label>
-              <select id="rating">
-                <option value="5">★★★★★ 神回</option>
-                <option value="4">★★★★☆ 面白い</option>
-                <option value="3">★★★☆☆ 普通</option>
-                <option value="2">★★☆☆☆ 微妙</option>
-                <option value="1">★☆☆☆☆ きつい</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="field">
-              <label>ネタバレ</label>
-              <select id="spoiler">
-                <option value="false">ネタバレなし</option>
-                <option value="true">ネタバレあり</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>タグ</label>
-              <select id="tag">
-                <option value="神回">神回</option>
-                <option value="笑った">笑った</option>
-                <option value="泣けた">泣けた</option>
-                <option value="考えさせられた">考えさせられた</option>
-                <option value="演出が良い">演出が良い</option>
-                <option value="出演者が良い">出演者が良い</option>
-                <option value="惜しい">惜しい</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <label>感想</label>
-            <textarea id="comment" placeholder="この放送回の感想を書いてください"></textarea>
-          </div>
-
-          <button onclick="addReview()">投稿する</button>
-        </section>
-
-        <aside class="card">
-          <div class="section-title"><h2>選べる番組候補</h2></div>
-          <div id="programCandidates" class="program-list"></div>
-        </aside>
-      </div>
-    </div>
-
-    <div id="view-reviews" class="view hidden">
-      <section class="card">
-        <div class="section-title">
-          <h2>最新口コミ</h2>
-          <span class="small">ネタバレはタップで表示</span>
-        </div>
-        <div class="field">
-          <input id="reviewFilter" placeholder="番組名・局名・タグで検索" oninput="renderAll()" />
-        </div>
-        <div id="reviews"></div>
-      </section>
-    </div>
-
-    <div id="view-ranking" class="view hidden">
-      <div class="grid">
-        <section class="card">
-          <div class="section-title"><h2>番組満足度ランキング</h2></div>
-          <div id="programRanking"></div>
-        </section>
-        <section class="card">
-          <div class="section-title"><h2>いいね数ランキング</h2></div>
-          <div id="likeRanking"></div>
-        </section>
-      </div>
-    </div>
-
-    <div id="view-admin" class="view hidden">
-      <section class="card admin">
-        <div class="section-title">
-          <h2>番組マスターに追加</h2>
-          <span class="small">自由記述ではなく、候補化して表記ゆれを防ぐ</span>
-        </div>
-        <div class="form-row">
-          <div class="field"><label>番組名</label><input id="newTitle" placeholder="例：新番組名" /></div>
-          <div class="field"><label>放送局</label><input id="newStation" placeholder="例：MBS / TBS / NHK" /></div>
-        </div>
-        <div class="form-row">
-          <div class="field"><label>ジャンル</label><input id="newGenre" placeholder="例：バラエティ" /></div>
-          <div class="field"><label>放送回タイトル</label><input id="newEpisodeTitle" placeholder="例：6/25放送回" /></div>
-        </div>
-        <button onclick="addProgramMaster()">番組候補に追加</button>
-      </section>
-
-      <section class="card">
-        <div class="section-title"><h2>現在の番組マスター</h2></div>
-        <div id="masterList" class="program-list"></div>
-      </section>
-    </div>
-  </main>
-
-  <nav class="bottom-nav">
-    <button class="active" data-view="home" onclick="switchView('home')">📺<br>番組</button>
-    <button data-view="post" onclick="switchView('post')">✍️<br>投稿</button>
-    <button data-view="reviews" onclick="switchView('reviews')">💬<br>口コミ</button>
-    <button data-view="ranking" onclick="switchView('ranking')">🏆<br>順位</button>
+  <nav class="tabs">
+    <button class="tab active" data-view="home" onclick="switchView('home')">番組表</button>
+    <button class="tab" data-view="post" onclick="switchView('post')">口コミを書く</button>
+    <button class="tab" data-view="reviews" onclick="switchView('reviews')">最新口コミ</button>
+    <button class="tab" data-view="ranking" onclick="switchView('ranking')">ランキング</button>
+    <button class="tab" data-view="admin" onclick="switchView('admin')">番組追加</button>
   </nav>
 
-  <script>
-    const STORAGE_KEYS = {
-      programs: "tvlog_programs_v2",
-      reviews: "tvlog_reviews_v2",
-      liked: "tvlog_liked_v2"
-    };
+  <div id="view-home" class="view">
+    <div class="grid">
+      <section class="card">
+        <div class="section-title"><h2>番組表</h2><span class="small">前後1週間・主要全国ネット番組</span></div>
+        <nav class="subtabs">
+          <button class="subtab active" data-schedule="now" onclick="switchSchedule('now')">📺 放送中</button>
+          <button class="subtab" data-schedule="today" onclick="switchSchedule('today')">📅 今日</button>
+          <button class="subtab" data-schedule="week" onclick="switchSchedule('week')">🗓 前後1週間</button>
+        </nav>
+        <div id="scheduleList" class="program-list"></div>
+      </section>
+      <aside>
+        <section class="card"><div class="section-title"><h2>今夜の神回ランキング</h2></div><div id="tonightRanking"></div></section>
+        <section class="card"><div class="section-title"><h2>口コミ数ランキング</h2></div><div id="countRanking"></div></section>
+      </aside>
+    </div>
+  </div>
 
-    const seedPrograms = [
-      {id:"p001", title:"水曜日のダウンタウン", station:"TBS系", genre:"バラエティ", cast:["ダウンタウン"], episodes:[
-        {id:"e001-20260624", date:"2026-06-24", title:"6/24放送回"},
-        {id:"e001-20260701", date:"2026-07-01", title:"7/1放送回"}
-      ]},
-      {id:"p002", title:"報道ステーション", station:"テレビ朝日系", genre:"報道", cast:[], episodes:[
-        {id:"e002-20260625", date:"2026-06-25", title:"6/25放送回"}
-      ]},
-      {id:"p003", title:"news23", station:"TBS系", genre:"報道", cast:[], episodes:[
-        {id:"e003-20260625", date:"2026-06-25", title:"6/25放送回"}
-      ]},
-      {id:"p004", title:"情熱大陸", station:"MBS/TBS系", genre:"ドキュメンタリー", cast:[], episodes:[
-        {id:"e004-20260629", date:"2026-06-29", title:"6/29放送回"}
-      ]},
-      {id:"p005", title:"M-1グランプリ", station:"ABC/テレビ朝日系", genre:"お笑い", cast:[], episodes:[
-        {id:"e005-20261220", date:"2026-12-20", title:"2026決勝"}
-      ]},
-      {id:"p006", title:"ラヴィット！", station:"TBS系", genre:"情報・バラエティ", cast:[], episodes:[
-        {id:"e006-20260625", date:"2026-06-25", title:"6/25放送回"}
-      ]},
-      {id:"p007", title:"プレバト!!", station:"MBS/TBS系", genre:"バラエティ", cast:[], episodes:[
-        {id:"e007-20260626", date:"2026-06-26", title:"6/26放送回"}
-      ]},
-      {id:"p008", title:"かまいたちの知らんけど", station:"MBS", genre:"バラエティ", cast:["かまいたち"], episodes:[
-        {id:"e008-20260628", date:"2026-06-28", title:"6/28放送回"}
-      ]}
-    ];
-
-    let programs = JSON.parse(localStorage.getItem(STORAGE_KEYS.programs) || "null") || seedPrograms;
-    let reviews = JSON.parse(localStorage.getItem(STORAGE_KEYS.reviews) || "[]");
-    let liked = JSON.parse(localStorage.getItem(STORAGE_KEYS.liked) || "[]");
-    let selectedProgramId = null;
-    let selectedEpisodeId = null;
-
-    function save(){
-      localStorage.setItem(STORAGE_KEYS.programs, JSON.stringify(programs));
-      localStorage.setItem(STORAGE_KEYS.reviews, JSON.stringify(reviews));
-      localStorage.setItem(STORAGE_KEYS.liked, JSON.stringify(liked));
-    }
-
-    function switchView(view){
-      document.querySelectorAll(".view").forEach(v => v.classList.add("hidden"));
-      document.getElementById("view-" + view).classList.remove("hidden");
-      document.querySelectorAll(".tab,.bottom-nav button").forEach(b => {
-        b.classList.toggle("active", b.dataset.view === view);
-      });
-      window.scrollTo({top:0, behavior:"smooth"});
-      renderAll();
-    }
-
-    function stars(n){
-      n = Number(n || 0);
-      return "★★★★★".slice(0,n) + "☆☆☆☆☆".slice(0,5-n);
-    }
-
-    function escapeHtml(text){
-      return String(text || "").replace(/[&<>"']/g, m => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-      }[m]));
-    }
-
-    function findProgram(id){ return programs.find(p => p.id === id); }
-    function findEpisode(program, episodeId){ return program?.episodes.find(e => e.id === episodeId); }
-
-    function getEpisodeReviews(programId, episodeId){
-      return reviews.filter(r => r.programId === programId && r.episodeId === episodeId);
-    }
-
-    function avg(list){
-      if(!list.length) return 0;
-      return list.reduce((sum,r)=>sum+Number(r.rating),0) / list.length;
-    }
-
-    function formatAvg(value){
-      return value ? value.toFixed(1) : "-";
-    }
-
-    function selectProgram(programId, episodeId){
-      const p = findProgram(programId);
-      if(!p) return;
-      selectedProgramId = programId;
-      selectedEpisodeId = episodeId || p.episodes[0]?.id;
-      document.getElementById("programSearch").value = p.title;
-      populateEpisodes();
-      updateSelectedBox();
-      switchView("post");
-    }
-
-    function populateEpisodes(){
-      const select = document.getElementById("episodeSelect");
-      const p = findProgram(selectedProgramId);
-      select.innerHTML = "";
-      if(!p){
-        select.innerHTML = '<option value="">先に番組を選択</option>';
-        return;
-      }
-      p.episodes.forEach(e => {
-        const opt = document.createElement("option");
-        opt.value = e.id;
-        opt.textContent = `${e.date}　${e.title}`;
-        select.appendChild(opt);
-      });
-      select.value = selectedEpisodeId || p.episodes[0]?.id;
-    }
-
-    function selectEpisodeFromDropdown(){
-      selectedEpisodeId = document.getElementById("episodeSelect").value;
-      updateSelectedBox();
-    }
-
-    function updateSelectedBox(){
-      const box = document.getElementById("selectedBox");
-      const p = findProgram(selectedProgramId);
-      const e = findEpisode(p, selectedEpisodeId);
-      if(!p || !e){ box.style.display="none"; return; }
-      box.style.display="block";
-      box.innerHTML = `選択中：${escapeHtml(p.title)} ／ ${escapeHtml(e.date)} ${escapeHtml(e.title)} <span class="small">（${escapeHtml(p.station)}）</span>`;
-    }
-
-    function showSuggestions(){
-      const q = document.getElementById("programSearch").value.trim().toLowerCase();
-      const box = document.getElementById("suggestions");
-      if(!q){ box.style.display="none"; return; }
-      const matched = programs.filter(p =>
-        p.title.toLowerCase().includes(q) ||
-        p.station.toLowerCase().includes(q) ||
-        p.genre.toLowerCase().includes(q) ||
-        p.cast.join(" ").toLowerCase().includes(q)
-      ).slice(0,8);
-      box.innerHTML = matched.map(p => `
-        <div class="suggestion" onclick="selectProgram('${p.id}')">
-          <strong>${escapeHtml(p.title)}</strong><br>
-          <span class="small">${escapeHtml(p.station)} ／ ${escapeHtml(p.genre)}</span>
+  <div id="view-post" class="view hidden">
+    <div class="grid">
+      <section class="card">
+        <div class="section-title"><h2>口コミを書く</h2><span class="small">番組ID・放送回IDで保存</span></div>
+        <div id="selectedBox" class="selected-box"></div>
+        <div class="field">
+          <label>番組を検索して選択</label>
+          <input id="programSearch" placeholder="例：水曜日、情熱大陸、報道、イッテQ" autocomplete="off" oninput="showSuggestions()" />
+          <div id="suggestions" class="suggestions"></div>
         </div>
-      `).join("") || `<div class="suggestion small">候補なし。「番組マスター」から追加してください。</div>`;
-      box.style.display="block";
-    }
-
-    function addReview(){
-      const p = findProgram(selectedProgramId);
-      const e = findEpisode(p, selectedEpisodeId);
-      const rating = Number(document.getElementById("rating").value);
-      const spoiler = document.getElementById("spoiler").value === "true";
-      const tag = document.getElementById("tag").value;
-      const comment = document.getElementById("comment").value.trim();
-
-      if(!p || !e){
-        alert("番組候補から番組を選択してください。自由入力では投稿できません。");
-        return;
-      }
-      if(!comment){
-        alert("感想を入力してください。");
-        return;
-      }
-
-      reviews.unshift({
-        id:"r" + Date.now(),
-        programId:p.id,
-        episodeId:e.id,
-        rating,
-        spoiler,
-        tag,
-        comment,
-        likes:0,
-        createdAt:new Date().toLocaleString("ja-JP")
-      });
-      document.getElementById("comment").value = "";
-      save();
-      renderAll();
-      switchView("reviews");
-    }
-
-    function toggleLike(reviewId){
-      const r = reviews.find(x => x.id === reviewId);
-      if(!r) return;
-      if(liked.includes(reviewId)){
-        liked = liked.filter(id => id !== reviewId);
-        r.likes = Math.max(0, Number(r.likes || 0) - 1);
-      }else{
-        liked.push(reviewId);
-        r.likes = Number(r.likes || 0) + 1;
-      }
-      save();
-      renderAll();
-    }
-
-    function revealSpoiler(el){
-      el.classList.remove("spoiler-hidden");
-      el.title = "";
-    }
-
-    function renderReview(r){
-      const p = findProgram(r.programId);
-      const e = findEpisode(p, r.episodeId);
-      const likedClass = liked.includes(r.id) ? "liked" : "";
-      return `
-        <article class="review">
-          <div class="review-title">
-            <div>
-              <strong>${escapeHtml(p?.title || "不明な番組")}</strong>
-              <div class="meta">${escapeHtml(p?.station || "")} ／ ${escapeHtml(e?.date || "")} ${escapeHtml(e?.title || "")}</div>
-            </div>
-            <span class="stars">${stars(r.rating)}</span>
-          </div>
-          <div class="stats">
-            <span class="badge gold">⭐ ${r.rating}.0</span>
-            <span class="badge blue">#${escapeHtml(r.tag)}</span>
-            ${r.spoiler ? '<span class="badge red">ネタバレあり</span>' : '<span class="badge green">ネタバレなし</span>'}
-          </div>
-          <p class="comment ${r.spoiler ? 'spoiler-hidden' : ''}" ${r.spoiler ? 'onclick="revealSpoiler(this)" title="タップでネタバレ表示"' : ''}>${escapeHtml(r.comment)}</p>
-          <div class="review-actions">
-            <button class="like-btn ${likedClass}" onclick="toggleLike('${r.id}')">❤️ ${r.likes || 0}</button>
-            <span class="small">${escapeHtml(r.createdAt)}</span>
-          </div>
-        </article>
-      `;
-    }
-
-    function renderTodayPrograms(){
-      const area = document.getElementById("todayPrograms");
-      area.innerHTML = programs.map(p => {
-        const e = p.episodes[p.episodes.length - 1];
-        const list = getEpisodeReviews(p.id, e.id);
-        const programReviews = reviews.filter(r => r.programId === p.id);
-        return `
-          <div class="program-card" onclick="selectProgram('${p.id}','${e.id}')">
-            <div class="program-head">
-              <div>
-                <div class="program-title">${escapeHtml(p.title)}</div>
-                <div class="meta">${escapeHtml(p.station)} ／ ${escapeHtml(p.genre)} ／ ${escapeHtml(e.date)} ${escapeHtml(e.title)}</div>
-              </div>
-              <span class="badge blue">投稿</span>
-            </div>
-            <div class="stats">
-              <span class="badge gold">放送回平均 ${formatAvg(avg(list))}</span>
-              <span class="badge">口コミ ${list.length}</span>
-              <span class="badge green">番組平均 ${formatAvg(avg(programReviews))}</span>
-            </div>
-          </div>
-        `;
-      }).join("");
-    }
-
-    function renderCandidates(){
-      document.getElementById("programCandidates").innerHTML = programs.slice(0,8).map(p => {
-        const programReviews = reviews.filter(r => r.programId === p.id);
-        return `
-          <div class="program-card" onclick="selectProgram('${p.id}')">
-            <div class="program-title">${escapeHtml(p.title)}</div>
-            <div class="meta">${escapeHtml(p.station)} ／ ${escapeHtml(p.genre)}</div>
-            <div class="stats">
-              <span class="badge gold">平均 ${formatAvg(avg(programReviews))}</span>
-              <span class="badge">口コミ ${programReviews.length}</span>
-            </div>
-          </div>
-        `;
-      }).join("");
-    }
-
-    function renderReviews(){
-      const q = (document.getElementById("reviewFilter")?.value || "").trim().toLowerCase();
-      let list = reviews.filter(r => {
-        const p = findProgram(r.programId);
-        return !q || p?.title.toLowerCase().includes(q) || p?.station.toLowerCase().includes(q) || r.tag.toLowerCase().includes(q);
-      });
-      document.getElementById("reviews").innerHTML = list.length ? list.map(renderReview).join("") : `<div class="empty">まだ口コミがありません。<br>番組を選んで最初の口コミを書いてください。</div>`;
-    }
-
-    function renderRanking(){
-      const programRanking = programs.map(p => {
-        const list = reviews.filter(r => r.programId === p.id);
-        return {p, count:list.length, avg:avg(list)};
-      }).filter(x => x.count > 0).sort((a,b)=> b.avg - a.avg || b.count - a.count);
-
-      document.getElementById("programRanking").innerHTML = renderRankingList(programRanking, x =>
-        `<strong>${escapeHtml(x.p.title)}</strong><div class="meta">${escapeHtml(x.p.station)} ／ 平均 ${formatAvg(x.avg)} ／ 口コミ ${x.count}</div>`
-      );
-
-      const likeRanking = [...reviews].sort((a,b)=>(b.likes||0)-(a.likes||0)).slice(0,10);
-      document.getElementById("likeRanking").innerHTML = likeRanking.length ? likeRanking.map((r,i)=>{
-        const p = findProgram(r.programId);
-        return `<div class="ranking-item"><div class="rank">${i+1}</div><div><strong>${escapeHtml(p?.title || "")}</strong><div class="meta">❤️ ${r.likes || 0} ／ ${stars(r.rating)}</div><div class="small">${escapeHtml(r.comment).slice(0,70)}${r.comment.length>70?"…":""}</div></div></div>`;
-      }).join("") : `<div class="empty">まだランキングはありません。</div>`;
-
-      const episodeRanking = [];
-      programs.forEach(p => p.episodes.forEach(e => {
-        const list = getEpisodeReviews(p.id,e.id);
-        if(list.length) episodeRanking.push({p,e,count:list.length,avg:avg(list)});
-      }));
-      episodeRanking.sort((a,b)=> b.avg - a.avg || b.count - a.count);
-      document.getElementById("tonightRanking").innerHTML = renderRankingList(episodeRanking.slice(0,5), x =>
-        `<strong>${escapeHtml(x.p.title)}</strong><div class="meta">${escapeHtml(x.e.date)} ${escapeHtml(x.e.title)} ／ 平均 ${formatAvg(x.avg)} ／ ${x.count}件</div>`
-      );
-
-      const stationMap = {};
-      reviews.forEach(r => {
-        const p = findProgram(r.programId);
-        if(!p) return;
-        stationMap[p.station] ||= [];
-        stationMap[p.station].push(r);
-      });
-      const stationRanking = Object.entries(stationMap).map(([station,list])=>({station,avg:avg(list),count:list.length})).sort((a,b)=>b.avg-a.avg);
-      document.getElementById("stationRanking").innerHTML = renderRankingList(stationRanking.slice(0,5), x =>
-        `<strong>${escapeHtml(x.station)}</strong><div class="meta">平均 ${formatAvg(x.avg)} ／ 口コミ ${x.count}</div>`
-      );
-    }
-
-    function renderRankingList(list, bodyFn){
-      return list.length ? list.map((x,i)=>`
-        <div class="ranking-item">
-          <div class="rank">${i+1}</div>
-          <div>${bodyFn(x)}</div>
+        <div class="form-row">
+          <div class="field"><label>放送回</label><select id="episodeSelect" onchange="selectEpisodeFromDropdown()"></select></div>
+          <div class="field"><label>評価</label><select id="rating"><option value="5">★★★★★ 神回</option><option value="4">★★★★☆ 面白い</option><option value="3">★★★☆☆ 普通</option><option value="2">★★☆☆☆ 微妙</option><option value="1">★☆☆☆☆ きつい</option></select></div>
         </div>
-      `).join("") : `<div class="empty">まだランキングはありません。</div>`;
-    }
-
-    function renderMaster(){
-      document.getElementById("masterList").innerHTML = programs.map(p => `
-        <div class="program-card">
-          <div class="program-title">${escapeHtml(p.title)}</div>
-          <div class="meta">ID：${escapeHtml(p.id)} ／ ${escapeHtml(p.station)} ／ ${escapeHtml(p.genre)}</div>
-          <div class="small">放送回：${p.episodes.map(e => escapeHtml(e.date + " " + e.title)).join("、")}</div>
+        <div class="form-row">
+          <div class="field"><label>ネタバレ</label><select id="spoiler"><option value="false">ネタバレなし</option><option value="true">ネタバレあり</option></select></div>
+          <div class="field"><label>タグ</label><select id="tag"><option value="神回">神回</option><option value="笑った">笑った</option><option value="泣けた">泣けた</option><option value="考えさせられた">考えさせられた</option><option value="演出が良い">演出が良い</option><option value="出演者が良い">出演者が良い</option><option value="惜しい">惜しい</option></select></div>
         </div>
-      `).join("");
-    }
+        <div class="field"><label>感想</label><textarea id="comment" placeholder="この放送回の感想を書いてください"></textarea></div>
+        <button onclick="addReview()">投稿する</button>
+      </section>
+      <aside class="card"><div class="section-title"><h2>選べる番組候補</h2></div><div id="programCandidates" class="program-list"></div></aside>
+    </div>
+  </div>
 
-    function addProgramMaster(){
-      const title = document.getElementById("newTitle").value.trim();
-      const station = document.getElementById("newStation").value.trim();
-      const genre = document.getElementById("newGenre").value.trim() || "未分類";
-      const episodeTitle = document.getElementById("newEpisodeTitle").value.trim() || "最新放送回";
-      if(!title || !station){
-        alert("番組名と放送局を入力してください。");
-        return;
-      }
-      const existing = programs.find(p => p.title === title && p.station === station);
-      if(existing){
-        alert("同じ番組がすでに番組マスターにあります。");
-        return;
-      }
-      const id = "p" + Date.now();
-      const today = new Date().toISOString().slice(0,10);
-      programs.push({
-        id,
-        title,
-        station,
-        genre,
-        cast:[],
-        episodes:[{id:"e" + Date.now(), date:today, title:episodeTitle}]
-      });
-      ["newTitle","newStation","newGenre","newEpisodeTitle"].forEach(id => document.getElementById(id).value = "");
-      save();
-      renderAll();
-      alert("番組マスターに追加しました。以後は候補から選べます。");
-    }
+  <div id="view-reviews" class="view hidden">
+    <section class="card">
+      <div class="section-title"><h2>最新口コミ</h2><span class="small">ネタバレはタップで表示</span></div>
+      <div class="field"><input id="reviewFilter" placeholder="番組名・局名・タグで検索" oninput="renderAll()" /></div>
+      <div id="reviews"></div>
+    </section>
+  </div>
 
-    function resetDemo(){
-      if(!confirm("投稿・追加番組・いいねを初期化しますか？")) return;
-      programs = seedPrograms;
-      reviews = [];
-      liked = [];
-      selectedProgramId = null;
-      selectedEpisodeId = null;
-      save();
-      renderAll();
-    }
+  <div id="view-ranking" class="view hidden">
+    <div class="grid">
+      <section class="card"><div class="section-title"><h2>神回ランキング</h2></div><div id="programRanking"></div></section>
+      <section class="card"><div class="section-title"><h2>急上昇ランキング</h2></div><div id="risingRanking"></div></section>
+      <section class="card"><div class="section-title"><h2>いいねランキング</h2></div><div id="likeRanking"></div></section>
+      <section class="card"><div class="section-title"><h2>口コミ数ランキング</h2></div><div id="countRankingFull"></div></section>
+    </div>
+  </div>
 
-    function renderAll(){
-      renderTodayPrograms();
-      renderCandidates();
-      renderReviews();
-      renderRanking();
-      renderMaster();
-      populateEpisodes();
-      updateSelectedBox();
-    }
+  <div id="view-admin" class="view hidden">
+    <section class="card">
+      <div class="section-title"><h2>番組候補に追加</h2><span class="small">自由記述ではなく候補化</span></div>
+      <div class="form-row"><div class="field"><label>番組名</label><input id="newTitle" placeholder="例：新番組名" /></div><div class="field"><label>系列・局</label><input id="newStation" placeholder="例：TBS系 / 日本テレビ系" /></div></div>
+      <div class="form-row"><div class="field"><label>ジャンル</label><input id="newGenre" placeholder="例：バラエティ" /></div><div class="field"><label>放送回タイトル</label><input id="newEpisodeTitle" placeholder="例：6/25放送回" /></div></div>
+      <button onclick="addProgramMaster()">番組候補に追加</button>
+    </section>
+    <section class="card"><div class="section-title"><h2>現在の番組マスター</h2></div><div id="masterList" class="program-list"></div></section>
+  </div>
+</main>
 
-    renderAll();
-  </script>
+<nav class="bottom-nav">
+  <button class="active" data-view="home" onclick="switchView('home')">📺<br>番組</button>
+  <button data-view="post" onclick="switchView('post')">✍️<br>投稿</button>
+  <button data-view="reviews" onclick="switchView('reviews')">💬<br>口コミ</button>
+  <button data-view="ranking" onclick="switchView('ranking')">🏆<br>順位</button>
+</nav>
+
+<script>
+const STORAGE_KEYS={programs:"tvlog_programs_v3",reviews:"tvlog_reviews_v3",liked:"tvlog_liked_v3"};
+const weeklyTemplates=[
+  {dow:0,time:"07:30",title:"シューイチ",station:"日本テレビ系",genre:"情報"},
+  {dow:0,time:"19:00",title:"ザ！鉄腕！DASH!!",station:"日本テレビ系",genre:"バラエティ"},
+  {dow:0,time:"19:58",title:"世界の果てまでイッテQ！",station:"日本テレビ系",genre:"バラエティ"},
+  {dow:0,time:"21:00",title:"日曜劇場",station:"TBS系",genre:"ドラマ"},
+  {dow:0,time:"22:00",title:"Mr.サンデー",station:"フジテレビ系",genre:"報道・情報"},
+  {dow:0,time:"23:00",title:"情熱大陸",station:"MBS/TBS系",genre:"ドキュメンタリー"},
+  {dow:1,time:"19:00",title:"有吉ゼミ",station:"日本テレビ系",genre:"バラエティ"},
+  {dow:1,time:"20:00",title:"世界まる見え！テレビ特捜部",station:"日本テレビ系",genre:"バラエティ"},
+  {dow:1,time:"21:00",title:"しゃべくり007",station:"日本テレビ系",genre:"バラエティ"},
+  {dow:1,time:"21:54",title:"報道ステーション",station:"テレビ朝日系",genre:"報道"},
+  {dow:1,time:"23:00",title:"news zero",station:"日本テレビ系",genre:"報道"},
+  {dow:2,time:"20:55",title:"マツコの知らない世界",station:"TBS系",genre:"バラエティ"},
+  {dow:2,time:"21:00",title:"ザ！世界仰天ニュース",station:"日本テレビ系",genre:"バラエティ"},
+  {dow:2,time:"21:54",title:"報道ステーション",station:"テレビ朝日系",genre:"報道"},
+  {dow:2,time:"23:00",title:"news zero",station:"日本テレビ系",genre:"報道"},
+  {dow:3,time:"19:00",title:"世界くらべてみたら",station:"TBS系",genre:"バラエティ"},
+  {dow:3,time:"20:00",title:"有吉の壁",station:"日本テレビ系",genre:"バラエティ"},
+  {dow:3,time:"21:00",title:"上田と女が吠える夜",station:"日本テレビ系",genre:"バラエティ"},
+  {dow:3,time:"22:00",title:"水曜日のダウンタウン",station:"TBS系",genre:"バラエティ"},
+  {dow:3,time:"21:54",title:"報道ステーション",station:"テレビ朝日系",genre:"報道"},
+  {dow:3,time:"23:00",title:"news zero",station:"日本テレビ系",genre:"報道"},
+  {dow:4,time:"19:00",title:"プレバト!!",station:"MBS/TBS系",genre:"バラエティ"},
+  {dow:4,time:"19:00",title:"突破ファイル",station:"日本テレビ系",genre:"バラエティ"},
+  {dow:4,time:"22:00",title:"櫻井・有吉THE夜会",station:"TBS系",genre:"バラエティ"},
+  {dow:4,time:"21:54",title:"報道ステーション",station:"テレビ朝日系",genre:"報道"},
+  {dow:4,time:"23:00",title:"news zero",station:"日本テレビ系",genre:"報道"},
+  {dow:5,time:"20:00",title:"それSnow Manにやらせて下さい",station:"TBS系",genre:"バラエティ"},
+  {dow:5,time:"20:00",title:"沸騰ワード10",station:"日本テレビ系",genre:"バラエティ"},
+  {dow:5,time:"23:00",title:"A-Studio+",station:"TBS系",genre:"トーク"},
+  {dow:5,time:"21:54",title:"報道ステーション",station:"テレビ朝日系",genre:"報道"},
+  {dow:5,time:"23:30",title:"news zero",station:"日本テレビ系",genre:"報道"},
+  {dow:6,time:"19:00",title:"嗚呼!!みんなの動物園",station:"日本テレビ系",genre:"バラエティ"},
+  {dow:6,time:"19:56",title:"世界一受けたい授業",station:"日本テレビ系",genre:"教養"},
+  {dow:6,time:"21:00",title:"出没！アド街ック天国",station:"テレビ東京系",genre:"情報・街"},
+  {dow:6,time:"22:00",title:"情報7daysニュースキャスター",station:"TBS系",genre:"報道・情報"}
+];
+
+function ymd(d){return d.toISOString().slice(0,10)}
+function dateLabel(dateStr){const d=new Date(dateStr+"T00:00:00");return `${d.getMonth()+1}/${d.getDate()}(${["日","月","火","水","木","金","土"][d.getDay()]})`}
+function today0(){const d=new Date();d.setHours(0,0,0,0);return d}
+
+function buildSeedPrograms(){
+  const base=today0();
+  const byTitle={};
+  for(let offset=-7;offset<=7;offset++){
+    const d=new Date(base); d.setDate(base.getDate()+offset);
+    const day=d.getDay(), date=ymd(d);
+    weeklyTemplates.filter(t=>t.dow===day).forEach(t=>{
+      const id="p_"+slug(t.title);
+      byTitle[id] ||= {id,title:t.title,station:t.station,genre:t.genre,cast:[],episodes:[]};
+      byTitle[id].episodes.push({id:`e_${slug(t.title)}_${date}`,date,time:t.time,title:`${dateLabel(date)}放送回`});
+    });
+  }
+  return Object.values(byTitle).map(p=>({...p,episodes:p.episodes.sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))}));
+}
+function slug(s){return encodeURIComponent(s).replace(/%/g,"").slice(0,28)}
+
+const seedPrograms=buildSeedPrograms();
+let programs=JSON.parse(localStorage.getItem(STORAGE_KEYS.programs)||"null")||seedPrograms;
+let reviews=JSON.parse(localStorage.getItem(STORAGE_KEYS.reviews)||"[]");
+let liked=JSON.parse(localStorage.getItem(STORAGE_KEYS.liked)||"[]");
+let selectedProgramId=null, selectedEpisodeId=null, scheduleMode="now";
+
+function save(){localStorage.setItem(STORAGE_KEYS.programs,JSON.stringify(programs));localStorage.setItem(STORAGE_KEYS.reviews,JSON.stringify(reviews));localStorage.setItem(STORAGE_KEYS.liked,JSON.stringify(liked))}
+function switchView(view){document.querySelectorAll(".view").forEach(v=>v.classList.add("hidden"));document.getElementById("view-"+view).classList.remove("hidden");document.querySelectorAll(".tab,.bottom-nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===view));window.scrollTo({top:0,behavior:"smooth"});renderAll()}
+function switchSchedule(mode){scheduleMode=mode;document.querySelectorAll(".subtab").forEach(b=>b.classList.toggle("active",b.dataset.schedule===mode));renderSchedule()}
+function stars(n){n=Number(n||0);return "★★★★★".slice(0,n)+"☆☆☆☆☆".slice(0,5-n)}
+function escapeHtml(text){return String(text||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function findProgram(id){return programs.find(p=>p.id===id)} function findEpisode(p,eid){return p?.episodes.find(e=>e.id===eid)}
+function getEpisodeReviews(pid,eid){return reviews.filter(r=>r.programId===pid&&r.episodeId===eid)} function avg(list){return list.length?list.reduce((s,r)=>s+Number(r.rating),0)/list.length:0} function formatAvg(v){return v?v.toFixed(1):"-"}
+function allEpisodes(){return programs.flatMap(p=>p.episodes.map(e=>({p,e}))).sort((a,b)=>(a.e.date+a.e.time).localeCompare(b.e.date+b.e.time))}
+function isNow(e){const now=new Date();const start=new Date(e.date+"T"+e.time+":00");const end=new Date(start);end.setMinutes(end.getMinutes()+60);return now>=start&&now<=end}
+function selectProgram(pid,eid){const p=findProgram(pid);if(!p)return;selectedProgramId=pid;selectedEpisodeId=eid||nearestEpisode(p)?.id||p.episodes[0]?.id;document.getElementById("programSearch").value=p.title;populateEpisodes();updateSelectedBox();switchView("post")}
+function nearestEpisode(p){const today=ymd(new Date());return p.episodes.find(e=>e.date>=today)||p.episodes[p.episodes.length-1]}
+function populateEpisodes(){const select=document.getElementById("episodeSelect");const p=findProgram(selectedProgramId);select.innerHTML="";if(!p){select.innerHTML='<option value="">先に番組を選択</option>';return}p.episodes.forEach(e=>{const opt=document.createElement("option");opt.value=e.id;opt.textContent=`${e.date} ${e.time}　${e.title}`;select.appendChild(opt)});select.value=selectedEpisodeId||nearestEpisode(p)?.id}
+function selectEpisodeFromDropdown(){selectedEpisodeId=document.getElementById("episodeSelect").value;updateSelectedBox()}
+function updateSelectedBox(){const box=document.getElementById("selectedBox");const p=findProgram(selectedProgramId);const e=findEpisode(p,selectedEpisodeId);if(!p||!e){box.style.display="none";return}box.style.display="block";box.innerHTML=`選択中：${escapeHtml(p.title)} ／ ${escapeHtml(e.date)} ${escapeHtml(e.time)} ${escapeHtml(e.title)} <span class="small">（${escapeHtml(p.station)}）</span>`}
+function showSuggestions(){const q=document.getElementById("programSearch").value.trim().toLowerCase();const box=document.getElementById("suggestions");if(!q){box.style.display="none";return}const matched=programs.filter(p=>p.title.toLowerCase().includes(q)||p.station.toLowerCase().includes(q)||p.genre.toLowerCase().includes(q)).slice(0,10);box.innerHTML=matched.map(p=>`<div class="suggestion" onclick="selectProgram('${p.id}')"><strong>${escapeHtml(p.title)}</strong><br><span class="small">${escapeHtml(p.station)} ／ ${escapeHtml(p.genre)}</span></div>`).join("")||`<div class="suggestion small">候補なし。「番組追加」から追加してください。</div>`;box.style.display="block"}
+function addReview(){const p=findProgram(selectedProgramId), e=findEpisode(p,selectedEpisodeId);const rating=Number(document.getElementById("rating").value), spoiler=document.getElementById("spoiler").value==="true", tag=document.getElementById("tag").value, comment=document.getElementById("comment").value.trim();if(!p||!e){alert("番組候補から番組を選択してください。自由入力では投稿できません。");return}if(!comment){alert("感想を入力してください。");return}reviews.unshift({id:"r"+Date.now(),programId:p.id,episodeId:e.id,rating,spoiler,tag,comment,likes:0,createdAt:new Date().toLocaleString("ja-JP")});document.getElementById("comment").value="";save();renderAll();switchView("reviews")}
+function toggleLike(rid){const r=reviews.find(x=>x.id===rid);if(!r)return;if(liked.includes(rid)){liked=liked.filter(id=>id!==rid);r.likes=Math.max(0,Number(r.likes||0)-1)}else{liked.push(rid);r.likes=Number(r.likes||0)+1}save();renderAll()}
+function revealSpoiler(el){el.classList.remove("spoiler-hidden");el.title=""}
+function renderSchedule(){
+  const area=document.getElementById("scheduleList");let eps=allEpisodes();const today=ymd(new Date());
+  if(scheduleMode==="now") eps=eps.filter(x=>isNow(x.e));
+  if(scheduleMode==="today") eps=eps.filter(x=>x.e.date===today);
+  if(scheduleMode==="week"){const start=new Date(today0());start.setDate(start.getDate()-7);const end=new Date(today0());end.setDate(end.getDate()+7);eps=eps.filter(x=>new Date(x.e.date+"T00:00:00")>=start&&new Date(x.e.date+"T00:00:00")<=end)}
+  if(!eps.length){area.innerHTML=`<div class="empty">該当する番組がありません。<br>「今日」または「前後1週間」を見てください。</div>`;return}
+  let currentDate="";
+  area.innerHTML=eps.map(({p,e})=>{
+    const list=getEpisodeReviews(p.id,e.id), programReviews=reviews.filter(r=>r.programId===p.id);let head="";
+    if(scheduleMode==="week"&&currentDate!==e.date){currentDate=e.date;head=`<div class="date-head">${dateLabel(e.date)}</div>`}
+    return `${head}<div class="program-card" onclick="selectProgram('${p.id}','${e.id}')"><div class="program-head"><div><div class="program-title">${escapeHtml(e.time)}　${escapeHtml(p.title)}</div><div class="meta">${escapeHtml(p.station)} ／ ${escapeHtml(p.genre)} ／ ${escapeHtml(e.title)}</div></div><span class="badge blue">投稿</span></div><div class="stats"><span class="badge gold">放送回平均 ${formatAvg(avg(list))}</span><span class="badge">口コミ ${list.length}</span><span class="badge green">番組平均 ${formatAvg(avg(programReviews))}</span></div></div>`
+  }).join("");
+}
+function renderReview(r){const p=findProgram(r.programId), e=findEpisode(p,r.episodeId), likedClass=liked.includes(r.id)?"liked":"";return `<article class="review"><div class="review-title"><div><strong>${escapeHtml(p?.title||"不明な番組")}</strong><div class="meta">${escapeHtml(p?.station||"")} ／ ${escapeHtml(e?.date||"")} ${escapeHtml(e?.time||"")} ${escapeHtml(e?.title||"")}</div></div><span class="stars">${stars(r.rating)}</span></div><div class="stats"><span class="badge gold">⭐ ${r.rating}.0</span><span class="badge blue">#${escapeHtml(r.tag)}</span>${r.spoiler?'<span class="badge red">ネタバレあり</span>':'<span class="badge green">ネタバレなし</span>'}</div><p class="comment ${r.spoiler?'spoiler-hidden':''}" ${r.spoiler?'onclick="revealSpoiler(this)" title="タップでネタバレ表示"':''}>${escapeHtml(r.comment)}</p><div class="review-actions"><button class="like-btn ${likedClass}" onclick="toggleLike('${r.id}')">❤️ ${r.likes||0}</button><span class="small">${escapeHtml(r.createdAt)}</span></div></article>`}
+function renderCandidates(){document.getElementById("programCandidates").innerHTML=programs.slice(0,10).map(p=>{const prs=reviews.filter(r=>r.programId===p.id);return `<div class="program-card" onclick="selectProgram('${p.id}')"><div class="program-title">${escapeHtml(p.title)}</div><div class="meta">${escapeHtml(p.station)} ／ ${escapeHtml(p.genre)}</div><div class="stats"><span class="badge gold">平均 ${formatAvg(avg(prs))}</span><span class="badge">口コミ ${prs.length}</span></div></div>`}).join("")}
+function renderReviews(){const q=(document.getElementById("reviewFilter")?.value||"").trim().toLowerCase();const list=reviews.filter(r=>{const p=findProgram(r.programId);return !q||p?.title.toLowerCase().includes(q)||p?.station.toLowerCase().includes(q)||r.tag.toLowerCase().includes(q)});document.getElementById("reviews").innerHTML=list.length?list.map(renderReview).join(""):`<div class="empty">まだ口コミがありません。<br>番組を選んで最初の口コミを書いてください。</div>`}
+function renderRanking(){
+  const episodeRanking=[];programs.forEach(p=>p.episodes.forEach(e=>{const list=getEpisodeReviews(p.id,e.id);if(list.length)episodeRanking.push({p,e,count:list.length,avg:avg(list),likes:list.reduce((s,r)=>s+(r.likes||0),0)})}));episodeRanking.sort((a,b)=>b.avg-a.avg||b.count-a.count);
+  document.getElementById("programRanking").innerHTML=renderRankingList(episodeRanking.slice(0,10),x=>`<strong>${escapeHtml(x.p.title)}</strong><div class="meta">${escapeHtml(x.e.date)} ${escapeHtml(x.e.time)} ／ 平均 ${formatAvg(x.avg)} ／ ${x.count}件</div>`);
+  document.getElementById("tonightRanking").innerHTML=renderRankingList(episodeRanking.slice(0,5),x=>`<strong>${escapeHtml(x.p.title)}</strong><div class="meta">${escapeHtml(x.e.date)} ${escapeHtml(x.e.time)} ／ 平均 ${formatAvg(x.avg)} ／ ${x.count}件</div>`);
+  const countRank=[...episodeRanking].sort((a,b)=>b.count-a.count||b.avg-a.avg);
+  document.getElementById("countRanking").innerHTML=renderRankingList(countRank.slice(0,5),x=>`<strong>${escapeHtml(x.p.title)}</strong><div class="meta">${escapeHtml(x.e.date)} ${escapeHtml(x.e.time)} ／ 口コミ ${x.count}件</div>`);
+  document.getElementById("countRankingFull").innerHTML=renderRankingList(countRank.slice(0,10),x=>`<strong>${escapeHtml(x.p.title)}</strong><div class="meta">${escapeHtml(x.e.date)} ${escapeHtml(x.e.time)} ／ 口コミ ${x.count}件</div>`);
+  const rising=[...episodeRanking].sort((a,b)=>(b.avg*b.count)-(a.avg*a.count));
+  document.getElementById("risingRanking").innerHTML=renderRankingList(rising.slice(0,10),x=>`<strong>${escapeHtml(x.p.title)}</strong><div class="meta">勢い ${(x.avg*x.count).toFixed(1)} ／ 平均 ${formatAvg(x.avg)} ／ ${x.count}件</div>`);
+  const likeRanking=[...reviews].sort((a,b)=>(b.likes||0)-(a.likes||0)).slice(0,10);
+  document.getElementById("likeRanking").innerHTML=likeRanking.length?likeRanking.map((r,i)=>{const p=findProgram(r.programId),e=findEpisode(p,r.episodeId);return `<div class="ranking-item"><div class="rank">${i+1}</div><div><strong>${escapeHtml(p?.title||"")}</strong><div class="meta">❤️ ${r.likes||0} ／ ${escapeHtml(e?.date||"")} ${escapeHtml(e?.time||"")} ／ ${stars(r.rating)}</div><div class="small">${escapeHtml(r.comment).slice(0,70)}${r.comment.length>70?"…":""}</div></div></div>`}).join(""):`<div class="empty">まだランキングはありません。</div>`;
+}
+function renderRankingList(list,bodyFn){return list.length?list.map((x,i)=>`<div class="ranking-item"><div class="rank">${i+1}</div><div>${bodyFn(x)}</div></div>`).join(""):`<div class="empty">まだランキングはありません。</div>`}
+function renderMaster(){document.getElementById("masterList").innerHTML=programs.map(p=>`<div class="program-card"><div class="program-title">${escapeHtml(p.title)}</div><div class="meta">ID：${escapeHtml(p.id)} ／ ${escapeHtml(p.station)} ／ ${escapeHtml(p.genre)}</div><div class="small">放送回：${p.episodes.map(e=>escapeHtml(e.date+" "+e.time+" "+e.title)).join("、")}</div></div>`).join("")}
+function addProgramMaster(){const title=document.getElementById("newTitle").value.trim(),station=document.getElementById("newStation").value.trim(),genre=document.getElementById("newGenre").value.trim()||"未分類",episodeTitle=document.getElementById("newEpisodeTitle").value.trim()||"最新放送回";if(!title||!station){alert("番組名と系列・局を入力してください。");return}const existing=programs.find(p=>p.title===title&&p.station===station);if(existing){alert("同じ番組がすでに番組マスターにあります。");return}const id="p"+Date.now(),today=ymd(new Date());programs.push({id,title,station,genre,cast:[],episodes:[{id:"e"+Date.now(),date:today,time:"20:00",title:episodeTitle}]});["newTitle","newStation","newGenre","newEpisodeTitle"].forEach(id=>document.getElementById(id).value="");save();renderAll();alert("番組候補に追加しました。")}
+function resetDemo(){if(!confirm("投稿・追加番組・いいねを初期化しますか？"))return;programs=buildSeedPrograms();reviews=[];liked=[];selectedProgramId=null;selectedEpisodeId=null;save();renderAll()}
+function renderAll(){renderSchedule();renderCandidates();renderReviews();renderRanking();renderMaster();populateEpisodes();updateSelectedBox()}
+renderAll();
+</script>
 </body>
 </html>
