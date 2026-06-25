@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>TV口コミログ</title>
+  <style>
+    body { font-family: sans-serif; background:#f5f5f5; margin:0; padding:20px; }
+    .app { max-width:800px; margin:auto; background:white; padding:24px; border-radius:16px; }
+    h1 { margin-top:0; }
+    input, textarea, select, button {
+      width:100%; padding:12px; margin:8px 0; font-size:16px; box-sizing:border-box;
+    }
+    button { background:#222; color:white; border:0; border-radius:8px; cursor:pointer; }
+    .review { border-top:1px solid #ddd; padding:16px 0; }
+    .meta { color:#666; font-size:14px; }
+    .spoiler { background:#fff3cd; padding:4px 8px; border-radius:6px; font-size:12px; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>TV口コミログ</h1>
+    <p>見たテレビ番組の感想を残せるアプリです。</p>
+
+    <h2>口コミを書く</h2>
+    <input id="program" placeholder="番組名">
+    <input id="date" type="date">
+    <select id="rating">
+      <option value="面白い">面白い</option>
+      <option value="普通">普通</option>
+      <option value="微妙">微妙</option>
+    </select>
+    <select id="spoiler">
+      <option value="なし">ネタバレなし</option>
+      <option value="あり">ネタバレあり</option>
+    </select>
+    <textarea id="comment" rows="4" placeholder="感想を書く"></textarea>
+    <button onclick="addReview()">投稿する</button>
+
+    <h2>検索</h2>
+    <input id="search" placeholder="番組名で検索" oninput="renderReviews()">
+
+    <h2>最新口コミ</h2>
+    <div id="reviews"></div>
+  </div>
+
+  <script>
+    let reviews = JSON.parse(localStorage.getItem("tvReviews") || "[]");
+
+    function addReview() {
+      const program = document.getElementById("program").value.trim();
+      const date = document.getElementById("date").value;
+      const rating = document.getElementById("rating").value;
+      const spoiler = document.getElementById("spoiler").value;
+      const comment = document.getElementById("comment").value.trim();
+
+      if (!program || !date || !comment) {
+        alert("番組名・放送日・感想を入力してください");
+        return;
+      }
+
+      reviews.unshift({
+        program, date, rating, spoiler, comment,
+        createdAt: new Date().toLocaleString()
+      });
+
+      localStorage.setItem("tvReviews", JSON.stringify(reviews));
+
+      document.getElementById("program").value = "";
+      document.getElementById("date").value = "";
+      document.getElementById("comment").value = "";
+
+      renderReviews();
+    }
+
+    function renderReviews() {
+      const keyword = document.getElementById("search").value.trim();
+      const list = reviews.filter(r => r.program.includes(keyword));
+
+      document.getElementById("reviews").innerHTML = list.map(r => `
+        <div class="review">
+          <h3>${escapeHtml(r.program)}</h3>
+          <div class="meta">
+            放送日：${r.date} ／ 評価：${r.rating} ／ 投稿日：${r.createdAt}
+            ${r.spoiler === "あり" ? '<span class="spoiler">ネタバレあり</span>' : ''}
+          </div>
+          <p>${escapeHtml(r.comment)}</p>
+        </div>
+      `).join("") || "<p>まだ口コミがありません。</p>";
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, function(match) {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        }[match];
+      });
+    }
+
+    renderReviews();
+  </script>
+</body>
+</html>
